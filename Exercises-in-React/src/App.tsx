@@ -1,3 +1,6 @@
+import UseLocalStorage from "./exer-10/UseLocalStorage"
+import UseNumberStorage from "./exer-10/UseNumberStorage"
+import UseSettingStorage from "./exer-10/UseSettingStorage"
 import ProductCard from "./exer-7/ProductCard"
 import Welcome from "./exer-7/Welcome"
 import WelcomeWithType from "./exer-7/WelcomeWithType"
@@ -14,6 +17,14 @@ const App = () => {
   const handleSubmit = (email: string) => {
     console.log("Submitted email:", email);
   }
+
+  // const [score, setScore] =UseNumberStorage('userScore', 10);
+  // const [setting, setSetting]= UseSettingStorage('setting',{language:'en',notification:true })
+
+  // using custom hooks to store number and object in localStorage
+  const [score, setScore]=UseLocalStorage<number>('userScore', 10)
+  const [setting, setSetting]=UseLocalStorage<{language:string, notification:boolean}>('setting',{language:'en',notification:true })
+
   return (
     <div>
       {/* exercise 7 */}
@@ -28,9 +39,18 @@ const App = () => {
       <TodoList/> */}
 
       {/* exercise 9 */}
-      <EmailForm onSubmit={handleSubmit}/>
+      {/* <EmailForm onSubmit={handleSubmit}/>
       <AgeForm onSubmit={(age:number) => console.log( age < 18 ? alert('you can not submit'): age)}/>
-      <ContactForm onSubmit={(contact:{name:string, email:string}) => console.log(contact)}/>
+      <ContactForm onSubmit={(contact:{name:string, email:string}) => console.log(contact)}/> */}
+
+      {/* exercise 10 */}
+      <div>
+        <h2>User Score: {score}</h2>
+        <button onClick={() => setScore(score + 5)}>Increase Score by 5</button>
+        <h2>Settings:{setting?.language}</h2>
+        <button onClick={() => setSetting({language: 'es', notification: false})}>Change Settings</button>
+      </div>
+
     </div>
   )
 }
